@@ -5,23 +5,15 @@
   <title>Welcome Agent</title>
   <!--<link rel="stylesheet" href="/css/style.css">-->
 </head>
-<body>
-  <ul class="pages">
-    <li class="login page">
-      <div class="form">
-        <input id="userinputtextbox" class="usernameInput" type="text" maxlength="14" />
-      </div>
-    </li>
-  </ul>
-  <div class="recomendations">
-  </div>
-  <span id="connectUser">connect user</span>
-  <span id="agentId"></span>
 
+<body>
+  <button type="button" id="connectUser" class="username" >Connect User</button>
+  <!--<span id="connectUser" class="username">Connect User</span>-->
+  <span id="agentId"></span>
+  <div class="recomendations divStyle">
+  </div>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="./js/socket.io.js"></script>
   <script src="./js/main.js"></script>
-  <!--<script src="../server.js"></script>-->
-
 </body>
 </html>
