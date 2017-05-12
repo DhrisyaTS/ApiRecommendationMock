@@ -1,0 +1,8 @@
+{
+   "agent1" : {
+      "message" : "agent 1 "
+   },
+   "agent2" : {
+        "message" : "agent 2 "
+   }
+}
