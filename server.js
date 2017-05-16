@@ -87,10 +87,8 @@ router.post('/authenticate', function (req, res) {
         });
 
 });
-
-
-
 app.use('/api', router);
 
 server.listen(port);
 console.log('Listening to port ' + port);
+module.exports = server
