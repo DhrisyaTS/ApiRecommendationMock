@@ -3,12 +3,19 @@
 var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
-var agentData = require('./agent');
+var userData = require('./user');
 var fs = require("fs");
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var jwt = require('jsonwebtoken');
 app.use(express.static(__dirname + '/public'));
+
+var impObject = {
+    'jwtSecret': 'mockcontactcenter'
+};
+
+app.set('jwtSecret', impObject.jwtSecret);
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -49,11 +56,41 @@ router.post('/sendSuggestion', function (req, res) {
     if (req.body && req.body.AgentId && users[req.body.AgentId]) {
         users[req.body.AgentId].emit('chat message', req.body.Message);
     }
-   
+
     res.json({ message: 'Success. Message Sent' });
 });
+
+router.get('/users', function (req, res) {
+    //console.log(userData.user1);
+    res.json(userData.user1);
+});
+
+router.post('/authenticate', function (req, res) {
+
+    // find the user
+
+    if (userData.user1.name != req.body.name) {
+        res.json({ success: false, message: 'Authentication failed. User not found.' });
+    }
+    if (userData.user1.password != req.body.password) {
+        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+    }
+    var accessToken = jwt.sign(
+        {name:req.body.name}, 
+        impObject.jwtSecret, 
+        {expiresIn: '1h' }
+    );
+    res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token: accessToken
+        });
+
+});
+
+
 
 app.use('/api', router);
 
 server.listen(port);
-console.log('Magic happens on port ' + port);
+console.log('Listening to port ' + port);

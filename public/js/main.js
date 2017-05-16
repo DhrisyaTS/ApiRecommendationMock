@@ -5,7 +5,6 @@ console.log('check');
 $(function() {
   var $window = $(window);
   var $usernameInput = $('.usernameInput'); 
-  console.log('ABC');
 });
 var conPorps = {
     reconnectionAttempts: 5,
