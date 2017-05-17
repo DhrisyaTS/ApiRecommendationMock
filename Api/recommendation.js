@@ -5,9 +5,9 @@ module.exports.controller = function (apiRouts) {
         var skt = sockets.GetSocket(req.body.AgentId);
         if (req.body && req.body.AgentId && skt) {
             skt.emit('chat message', req.body.Message);
-            resp.json({ message: 'Success. Message Sent' });
+            resp.json({ message: 'Success. Message Sent'});
         } else {
-            resp.json({ message: 'Error. Message Not Sent!' });
+            resp.json({ message: 'Error. Message Not Sent!'});
         }
     });
 }
