@@ -1,20 +1,48 @@
-const request = require('supertest');
-const express = require('express');
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let server = require('../server.js');
+let should = chai.should();
+let expect = chai.expect;
 
-const app = express();
+chai.use(chaiHttp);
 
-app.get('/', function (req, res) {
-    res.status(200).json();
+describe('Root API', () => {
+    it('Test the root path.', function (done) {
+        chai.request(server)
+            .get('/')
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+
 });
 
-
-describe('Root API', function () {
-    it('Respond from root API', function (done) {
-        request(app)
-            .get('/')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200, done);
+describe('authenticate API', () => {
+    it('authenticate api testing', function (done) {
+        chai.request(server)
+            .post('/api/authenticate')
+            .send({ 'name': 'dhrisya', 'password': 'password' })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.should.have.property('message').eql('Enjoy your token!');
+                res.body.should.have.property('token');
+                //console.log(res.body.should.have.property('message'));
+                done();
+            });
     });
 });
 
+
+describe('SendSuggestion API', () => {
+    it('Recommendation api testing', function (done) {
+        chai.request(server)
+            .post('/api/sendSuggestion')
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.should.have.property('message').eql('Success. Message Sent');
+                done();
+            });
+    });
+});
