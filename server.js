@@ -9,6 +9,8 @@ var fs = require("fs");
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var jwt = require('jsonwebtoken');
+
+var sockets = require('./socket/socket');
 app.use(express.static(__dirname + '/public'));
 
 var impObject = {
@@ -24,40 +26,23 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
-var users = {}
 
 io.on('connection', function (socket) {
     console.log(socket.id);
-    socket.on('new message', function (data) {
-        if (data && users && users[data]) {
-            users[data].emit('chat message', data);
-        }
-
-    });
     socket.on('connectUser', function (user) {
-        addClient(socket, user);
+        sockets.AddSocket(socket,user.From)
     });
     socket.on('disconnect', function () {
         console.log("client disconnected");
     });
 });
 
-function addClient(client, user) {
-    if (!users[user.From]) {
-        users[user.From] = client;
-    }
-}
-
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+///Loads all available routings
+require("./ApiRoutes")(express, app);
+
 router.get('/', function (req, res) {
     res.json({ message: 'welcome to our api!' });
-});
-router.post('/sendSuggestion', function (req, res) {
-    if (req.body && req.body.AgentId && users[req.body.AgentId]) {
-        users[req.body.AgentId].emit('chat message', req.body.Message);
-    }
-
-    res.json({ message: 'Success. Message Sent' });
 });
 
 router.get('/users', function (req, res) {
@@ -87,8 +72,6 @@ router.post('/authenticate', function (req, res) {
         });
 
 });
-
-
 
 app.use('/api', router);
 

@@ -24,7 +24,7 @@ socket.on('connect', function () {
 });
 
 socket.on('chat message', function (msg) {
-    $( ".recomendations" ).append( "<p>"+msg+"</p>" );
+    $(".recomendations").append("<div class=\"bubble me\">" + msg +"</div>" );
 });
 
 socket.on('disconnect', function () {
@@ -33,4 +33,8 @@ socket.on('disconnect', function () {
 
 function getRandomId() {
     return Math.floor(Math.random() * 770);
+}
+function openPopup() {
+    window.open("https://www.w3schools.com", '',
+        'width=450,height=600,scrollbars=yes,menubar=yes,status=yes,resizable=yes,directories=false,location=false,left=0,top=0');
 }
