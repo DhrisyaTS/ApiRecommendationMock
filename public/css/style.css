@@ -1,60 +1,80 @@
-/* Fix user-agent */
-
-* {
-  box-sizing: border-box;
+.chat {
+  width: 400px;
 }
 
-html {
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
+.bubble {
+  background-color: #F2F2F2;
+  border-radius: 5px;
+  box-shadow: 0 0 6px #B2B2B2;
+  display: inline-block;
+  padding: 10px 18px;
+  position: relative;
+  vertical-align: top;
 }
 
-html, input {
-  font-family:
-    "HelveticaNeue-Light",
-    "Helvetica Neue Light",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    "Lucida Grande",
-    sans-serif;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.divStyle {
-  color: gray;
-  font-size: 90%;
-  margin: 5px;
-}
-
-.username {
-  font-weight: 700;
-  overflow: hidden;
-  padding-right: 15px;
-  text-align: right;
-  margin: 10px;
-
-}
-
-/* Input */
-
-.inputMessage {
-  border: 10px solid #000;
-  bottom: 0;
-  height: 60px;
-  left: 0;
-  outline: none;
-  padding-left: 10px;
+.bubble::before {
+  background-color: #F2F2F2;
+  content: "\00a0";
+  display: block;
+  height: 16px;
   position: absolute;
-  right: 0;
-  width: 100%;
+  top: 11px;
+  transform: rotate( 29deg) skew( -35deg);
+  -moz-transform: rotate( 29deg) skew( -35deg);
+  -ms-transform: rotate( 29deg) skew( -35deg);
+  -o-transform: rotate( 29deg) skew( -35deg);
+  -webkit-transform: rotate( 29deg) skew( -35deg);
+  width: 20px;
 }
 
-#agentId{
-    font-size: 90%;
+.me {
+  float: left;
+  margin: 5px 45px 5px 20px;
+}
+
+.me::before {
+  box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4);
+  left: -9px;
+}
+
+.you {
+  float: right;
+  margin: 5px 20px 5px 45px;
+}
+
+.you::before {
+  box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4);
+  right: -9px;
+}
+
+.arrow_box {
+  position: relative;
+  background: #88b7d5;
+  border: 1px solid #4edff5;
+}
+
+.arrow_box:after,
+.arrow_box:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-right-color: #88b7d5;
+  border-width: 8px;
+  margin-top: -8px;
+}
+
+.arrow_box:before {
+  border-color: rgba(78, 223, 245, 0);
+  border-right-color: #4edff5;
+  border-width: 9px;
+  margin-top: -9px;
 }
