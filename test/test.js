@@ -38,7 +38,7 @@ describe('SendSuggestion API', () => {
     it('Recommendation api testing', function (done) {
         chai.request(server)
             .post('/api/sendRecommendation')
-            .send({ 'AgentId': '46', 'message': 'password' })
+            .send({ 'AgentId': '46', 'Message': 'password' })
             .end(function (err, res) {
                 res.should.have.status(200);
                 done();
