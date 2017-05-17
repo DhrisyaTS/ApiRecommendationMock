@@ -1,4 +1,3 @@
-var sockets = require('../socket/socket');
 var userData = require('../user');
 var jwt = require('jsonwebtoken');
 

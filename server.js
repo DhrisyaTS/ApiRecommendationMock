@@ -32,12 +32,6 @@ io.on('connection', function (socket) {
 ///Loads all available routings
 require("./ApiRoutes")(express, app);
 
-router.get('/', function (req, res) {
-    res.json({ message: 'welcome to our api!' });
-});
-
-app.use('/api', router);
-
 server.listen(port);
 console.log('Listening to port ' + port);
 module.exports = server
