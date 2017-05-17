@@ -31,6 +31,7 @@ io.on('connection', function (socket) {
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 ///Loads all available routings
 require("./ApiRoutes")(express, app);
+
 server.listen(port);
 console.log('Listening to port ' + port);
 module.exports = server
