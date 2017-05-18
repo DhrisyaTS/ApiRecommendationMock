@@ -1,5 +1,6 @@
 var userData = require('../user');
 var jwt = require('jsonwebtoken');
+var sockets = require('../socket/socket');
 
 var impObject = {
     'jwtSecret': 'mockcontactcenter',
@@ -36,12 +37,27 @@ module.exports.controller = function (apiRouts) {
         var accessToken = jwt.sign(
             { AgentId: req.body.AgentId, ClientId: req.body.ClientId},
             impObject.jwtSecret,
-            { expiresIn: '1h' }
+            { expiresIn: '48h' }
         );
         resp.json({
             success: true,
             message: 'Enjoy your token!',
             token: accessToken
+        });
+    });
+
+    apiRouts.post("/connectUser", function (req, resp) {
+        if (!req.body.AgentId) {
+            resp.json({ success: false, message: 'Not a valid Agent' });
+        }
+        if (!req.body.ClientId) {
+            resp.json({ success: false, message: 'Not a valid Client.' });
+        }
+        sockets.GetClient(req.body.AgentId, req.body.ClientId);
+        resp.json({
+            success: true,
+            message: 'Agent: ' + req.body.AgentId + ' connected to client: ' + req.body.ClientId,
+            AgentId: req.body.AgentId, ClientId: req.body.ClientId
         });
     });
 }
