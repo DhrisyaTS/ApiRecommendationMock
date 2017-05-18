@@ -8,13 +8,12 @@ var impObject = {
 module.exports.controller = function (apiRouts) {
 
     apiRouts.post("/sendRecommendation", function (req, resp) {
-        var skt = sockets.GetSocket(req.body.AgentId);
         var token = req.query.token;
         if (token) {
             jwt.verify(token, impObject.jwtSecret, function (err, decoded) {
                 if (err) {
-                    return resp.json({ success: false, message: 'Failed to authenticate token.' });
                     console.log('error');
+                    return resp.json({ success: false, message: 'Failed to authenticate token.' });
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
