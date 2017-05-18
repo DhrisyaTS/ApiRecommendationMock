@@ -1,6 +1,22 @@
-var user = {};
-user.From = getRandomId();
+function getUrlVars() {
+    var vars = {}, hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+var user = getUrlVars();//window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
+var connectSocket = function () {
+    if (user.agentId && user.clientId) {
+        socket.open();
+        socket.emit('connectUser', user);
+        $("#agentId").text('Client: ' + user.clientId + '. Agent Id: ' + user.agentId);
+        return false;
+    }
+}
 console.log('check');
 $(function() {
   var $window = $(window);
@@ -12,12 +28,12 @@ var conPorps = {
 }; 
 var socket = io('http://localhost:8080', conPorps);
 
-$("#connectUser").click(function () {
-    socket.open();
-    socket.emit('connectUser', user);
-    $("#agentId").text(user.From);
-    return false;
-});
+// $("#connectUser").click(function () {
+//     socket.open();
+//     socket.emit('connectUser', user);
+//     $("#agentId").text(user.From);
+//     return false;
+// });
 
 socket.on('connect', function () {
     alert("connected server");
@@ -34,7 +50,4 @@ socket.on('disconnect', function () {
 function getRandomId() {
     return Math.floor(Math.random() * 770);
 }
-function openPopup() {
-    window.open("https://www.w3schools.com", '',
-        'width=450,height=600,scrollbars=yes,menubar=yes,status=yes,resizable=yes,directories=false,location=false,left=0,top=0');
-}
+connectSocket();
