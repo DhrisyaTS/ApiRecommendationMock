@@ -48,5 +48,4 @@ app.use('/', pageRoute);
 
 server.listen(port);
 console.log('Listening to port ' + port);
-console.log(process.env);
 module.exports = server

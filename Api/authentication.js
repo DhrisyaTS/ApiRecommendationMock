@@ -17,7 +17,7 @@ module.exports.controller = function (apiRouts) {
         }
         var accessToken = jwt.sign(
             { name: req.body.name },
-            impObject.payloadSecret,
+            impObject.jwtSecret,
             { expiresIn: '48h' }
         );
         resp.json({
