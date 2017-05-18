@@ -1,18 +1,40 @@
 var sockets = require('../socket/socket');
+var jwt = require('jsonwebtoken');
 
+
+var impObject = {
+    'jwtSecret': 'mockcontactcenter'
+};
 module.exports.controller = function (apiRouts) {
-    apiRouts.post("/sendRecommendation", function (req, resp) { 
-        if (req.body && req.body.agentId && req.body.clientId) {
-            var client = sockets.GetSocket(req.body);
-            if (client && client.socket) {
-                client.socket.emit('chat message', req.body.Message);
-                resp.json({ message: 'Success. Message Sent' });
-            }
-            else{
-                resp.json({ message: 'Message Senting failed no open socket available' });
-            }
+
+    apiRouts.post("/sendRecommendation", function (req, resp) {
+        var skt = sockets.GetSocket(req.body.AgentId);
+        var token = req.query.token;
+        if (token) {
+            jwt.verify(token, impObject.jwtSecret, function (err, decoded) {
+                if (err) {
+                    return resp.json({ success: false, message: 'Failed to authenticate token.' });
+                    console.log('error');
+                } else {
+                    // if everything is good, save to request for use in other routes
+                    req.decoded = decoded;
+                    if (req.body && req.body.agentId && req.body.clientId) {
+                       var client = sockets.GetSocket(req.body);
+                        if (client && client.socket) {
+                            client.socket.emit('chat message', req.body.Message);
+                            resp.json({ message: 'Success. Message Sent' });
+                        }
+                      
+                    } else{
+                        resp.json({ message: 'Message Senting failed no open socket available' });
+                    }
+                }
+            });
         } else {
-            resp.json({ message: 'Error. Message Not Sent!'});
+            return resp.status(403).send({
+                success: false,
+                message: 'No token provided.'
+            });
         }
     });
 }

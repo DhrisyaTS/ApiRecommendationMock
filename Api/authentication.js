@@ -17,6 +17,25 @@ module.exports.controller = function (apiRouts) {
         }
         var accessToken = jwt.sign(
             { name: req.body.name },
+            impObject.payloadSecret,
+            { expiresIn: '48h' }
+        );
+        resp.json({
+            success: true,
+            message: 'Enjoy your token!',
+            token: accessToken
+        });
+    });
+
+    apiRouts.post("/acceptChat", function (req, resp) {
+        if (!req.body.AgentId) {
+            resp.json({ success: false, message: 'Not a valid Agent' });
+        }
+        if (req.body.ClientId) {
+            resp.json({ success: false, message: 'Not a valid Client.' });
+        }
+        var accessToken = jwt.sign(
+            { AgentId: req.body.AgentId, ClientId: req.body.ClientId},
             impObject.jwtSecret,
             { expiresIn: '48h' }
         );

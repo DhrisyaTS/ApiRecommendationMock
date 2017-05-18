@@ -41,6 +41,7 @@ pageRoute.get('/login', function (req, res) {
 
 pageRoute.get('/recommendation/:agentId?/:clientId?', function (req, res) {
     sockets.GetClient(req.query.agentId, req.query.clientId);
+
     res.sendfile(__dirname + '/public/index.html');
 });
 app.use('/', pageRoute);
