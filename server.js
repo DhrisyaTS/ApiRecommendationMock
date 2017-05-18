@@ -32,6 +32,20 @@ io.on('connection', function (socket) {
 ///Loads all available routings
 require("./ApiRoutes")(express, app);
 
+var pageRoute = express.Router();
+pageRoute.get('/login', function (req, res) {
+    res.sendfile(__dirname + '/public/AgentLogin.html');
+});
+
+pageRoute.post('/login', function (req, res) {
+    
+});
+
+pageRoute.get('/recommendation/:agentId', function (req, res) {
+    res.sendfile(__dirname + '/public/index.html');
+});
+app.use('/', pageRoute);
+
 server.listen(port);
 console.log('Listening to port ' + port);
 module.exports = server
