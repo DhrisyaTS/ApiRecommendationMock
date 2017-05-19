@@ -31,7 +31,7 @@ $('#sendButtonId').click(function () {
             message:  clientMessageId
                },
                 function  (data,  status)  {
-                  alert(data.message);  
+                  //alert(data.message);  
                 });
 
 

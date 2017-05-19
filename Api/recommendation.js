@@ -66,7 +66,7 @@ module.exports.controller = function (apiRouts) {
             }
         });
 
-        resp.json({ message: 'Test' });
+     //   resp.json({ message: 'Test' });
     });
 
 

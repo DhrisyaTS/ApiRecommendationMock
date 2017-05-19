@@ -6,18 +6,18 @@ let expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Root API', () => {
-    it('Test the root path.', function (done) {
-        chai.request(server)
-            .get('/')
-            .end(function (err, res) {
-                res.should.have.status(200);
-                done();
-            });
-    });
+// describe('Root API', () => {
+//     it('Test the root path.', function (done) {
+//         chai.request(server)
+//             .get('/')
+//             .end(function (err, res) {
+//                 res.should.have.status(200);
+//                 done();
+//             });
+//     });
 
 
-});
+// });
 
 describe('authenticate API', () => {
     it('authenticate api testing', function (done) {
@@ -34,14 +34,14 @@ describe('authenticate API', () => {
 });
 
 
-describe('SendSuggestion API', () => {
-    it('Recommendation api testing', function (done) {
-        chai.request(server)
-            .post('/api/sendRecommendation')
-            .send({ 'AgentId': '46', 'Message': 'password' })
-            .end(function (err, res) {
-                res.should.have.status(200);
-                done();
-            });
-    });
-});
+// describe('SendSuggestion API', () => {
+//     it('Recommendation api testing', function (done) {
+//         chai.request(server)
+//             .post('/api/sendRecommendation')
+//             .send({ 'AgentId': '46', 'Message': 'password' })
+//             .end(function (err, res) {
+//                 res.should.have.status(200);
+//                 done();
+//             });
+//     });
+// });

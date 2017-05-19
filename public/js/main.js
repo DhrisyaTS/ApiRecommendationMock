@@ -36,7 +36,7 @@ var socket = io('http://localhost:8080', conPorps);
 // });
 
 socket.on('connect', function () {
-    alert("connected server");
+    console.log("connected server");
 });
 
 socket.on('chat message', function (msg) {
@@ -44,7 +44,7 @@ socket.on('chat message', function (msg) {
 });
 
 socket.on('disconnect', function () {
-    alert("disconnected server");
+    console.log("disconnected server");
 });
 
 function getRandomId() {
