@@ -8,7 +8,9 @@ var fs = require("fs");
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var sockets = require('./socket/socket');
-app.use(express.static(__dirname + '/public'));
+var jwt = require('jsonwebtoken');
+
+app.use('/public',express.static(__dirname + '/public'));
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -21,7 +23,7 @@ var router = express.Router();              // get an instance of the express Ro
 io.on('connection', function (socket) {
     console.log(socket.id);
     socket.on('connectUser', function (user) {
-        sockets.AddSocket(socket,user.From)
+        sockets.AddSocket(socket, user);
     });
     socket.on('disconnect', function () {
         console.log("client disconnected");
@@ -37,11 +39,9 @@ pageRoute.get('/login', function (req, res) {
     res.sendfile(__dirname + '/public/AgentLogin.html');
 });
 
-pageRoute.post('/login', function (req, res) {
-    
-});
+pageRoute.get('/recommendation/:agentId?/:clientId?', function (req, res) {
+    sockets.GetClient(req.query.agentId, req.query.clientId);
 
-pageRoute.get('/recommendation/:agentId', function (req, res) {
     res.sendfile(__dirname + '/public/index.html');
 });
 app.use('/', pageRoute);
